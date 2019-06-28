@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { db } from "./firebase";
 
 function App() {
+  const [channels, setChannels] = useState([]);
+  useEffect(() => {
+    return db.collection("channel").onSnapshot(data => {
+      const docs = [];
+      data.forEach(doc => {
+        docs.push({
+          ...doc.data(),
+          id: doc.id
+        });
+      });
+      setChannels(docs);
+    });
+  }, []);
   return (
     <div className="App">
       <div className="Nav">
@@ -18,10 +32,11 @@ function App() {
           </div>
         </div>
         <nav className="ChannelNav">
-          <a href="/channel/awesome"># awesome</a>
-          <a className="active" href="/channel/general">
-            # general
-          </a>
+          {channels.map(channel => (
+            <a href={`/channel/${channel.id}`} key={channel.id}>
+              # {channel.id}
+            </a>
+          ))}
         </nav>
       </div>
       <div className="Channel">
