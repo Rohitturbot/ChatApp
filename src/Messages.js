@@ -4,18 +4,21 @@ import { db } from "./firebase";
 export default function Messages() {
   const [messages, setMessages] = useState([]);
   useEffect(() => {
-    return db.collection("channel/general/messages").onSnapshot(data => {
-      const docs = [];
-      data.forEach(doc => {
-        docs.push({
-          ...doc.data(),
-          id: doc.id
+    return db
+      .collection("channel/general/messages")
+      .orderBy("createAt")
+      .onSnapshot(data => {
+        const docs = [];
+        data.forEach(doc => {
+          docs.push({
+            ...doc.data(),
+            id: doc.id
+          });
         });
-      });
-      console.log("docs", docs);
+        console.log("docs", docs);
 
-      setMessages(docs);
-    });
+        setMessages(docs);
+      });
   }, []);
   return (
     <div className="Messages">
