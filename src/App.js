@@ -2,29 +2,33 @@ import React, { useState, useEffect } from "react";
 import Nav from "./Nav";
 import Channel from "./Channel";
 import { firebase } from "./firebase";
+import LoginButton from "./LoginButton";
 
-function App() {
+function useAuth() {
   const [user, setUser] = useState(null);
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      user ? setUser(user) : setUser(null);
+    return firebase.auth().onAuthStateChanged(user => {
+      user
+        ? setUser({
+            displayName: user.displayName,
+            picture: user.photoURL,
+            uid: user.uid
+          })
+        : setUser(null);
     });
-  });
-  const handelSignIn = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    const result = await firebase.auth().signInWithPopup(provider);
-    setUser(result);
-  };
+  }, []);
+  return user;
+}
+function App() {
+  const user = useAuth();
+
   return user ? (
     <div className="App">
-      <Nav />
+      <Nav user={user} />
       <Channel />
     </div>
   ) : (
-    <div className="Login">
-      <h1>OUR CHAT APP</h1>
-      <button onClick={handelSignIn}> Sign in with Google </button>
-    </div>
+    <LoginButton />
   );
 }
 
