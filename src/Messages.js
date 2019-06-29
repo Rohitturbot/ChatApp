@@ -9,7 +9,7 @@ export default function Messages() {
       <div className="EndOfMessages">That's every message!</div>
 
       {messages.map((message, index) => {
-        const previous = message[index - 1];
+        const previous = messages[index - 1];
         const showDay = false;
         const showAvatar = !previous || message.user.id !== previous.user.id;
         return showAvatar ? (
