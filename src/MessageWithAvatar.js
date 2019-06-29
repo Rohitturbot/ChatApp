@@ -10,7 +10,7 @@ function useDoc(path) {
         id: doc.id
       });
     });
-  });
+  }, []);
   return doc;
 }
 export default function MessageWithAvatar({ message, showDay }) {

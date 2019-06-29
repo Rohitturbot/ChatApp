@@ -4,13 +4,13 @@ import Messages from "./Messages";
 import ChatInputBox from "./ChatInputBox";
 import Members from "./Members";
 
-export default function Channel({ user }) {
+export default function Channel({ user, channelId }) {
   return (
     <div className="Channel">
       <div className="ChannelMain">
-        <ChannelInfo />
-        <Messages />
-        <ChatInputBox user={user} />
+        <ChannelInfo channelId={channelId} />
+        <Messages channelId={channelId} />
+        <ChatInputBox user={user} channelId={channelId} />
       </div>
       <Members />
     </div>

@@ -2,8 +2,8 @@ import React from "react";
 import useCollection from "./utils/useCollection";
 import MessageWithAvatar from "./MessageWithAvatar";
 
-export default function Messages() {
-  const messages = useCollection("channel/general/messages", "createAt");
+export default function Messages({ channelId }) {
+  const messages = useCollection(`channel/${channelId}/messages`, "createAt");
   return (
     <div className="Messages">
       <div className="EndOfMessages">That's every message!</div>
@@ -15,7 +15,7 @@ export default function Messages() {
         return showAvatar ? (
           <MessageWithAvatar showDay={showDay} message={message} />
         ) : (
-          <div>
+          <div key={message.id}>
             <div className="Message no-avatar">
               <div className="MessageContent">{message.text}</div>
             </div>

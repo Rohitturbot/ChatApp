@@ -3,6 +3,7 @@ import Nav from "./Nav";
 import Channel from "./Channel";
 import { db, firebase } from "./firebase";
 import LoginButton from "./LoginButton";
+import { Router, Redirect, redirectTo } from "@reach/router";
 
 function useAuth() {
   const [user, setUser] = useState(null);
@@ -32,7 +33,10 @@ function App() {
   return user ? (
     <div className="App">
       <Nav user={user} />
-      <Channel user={user} />
+      <Router>
+        <Channel path="channel/:channelId" user={user} />
+        <Redirect from="/" to="channel/general" />
+      </Router>
     </div>
   ) : (
     <LoginButton />
