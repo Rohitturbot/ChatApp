@@ -1,31 +1,38 @@
 import React, { useState, useEffect } from "react";
 import Nav from "./Nav";
 import Channel from "./Channel";
-import { firebase } from "./firebase";
+import { db, firebase } from "./firebase";
 import LoginButton from "./LoginButton";
 
 function useAuth() {
   const [user, setUser] = useState(null);
   useEffect(() => {
-    return firebase.auth().onAuthStateChanged(user => {
-      user
-        ? setUser({
-            displayName: user.displayName,
-            picture: user.photoURL,
-            uid: user.uid
-          })
-        : setUser(null);
+    return firebase.auth().onAuthStateChanged(fuser => {
+      if (fuser) {
+        let user = {
+          displayName: fuser.displayName,
+          picture: fuser.photoURL,
+          uid: fuser.uid
+        };
+        setUser(user);
+        db.collection("user")
+          .doc(user.uid)
+          .set(user, { merge: true });
+      } else {
+        setUser(null);
+      }
     });
   }, []);
   return user;
 }
+
 function App() {
   const user = useAuth();
 
   return user ? (
     <div className="App">
       <Nav user={user} />
-      <Channel />
+      <Channel user={user} />
     </div>
   ) : (
     <LoginButton />

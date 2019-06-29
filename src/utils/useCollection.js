@@ -5,7 +5,9 @@ export default function useCollection(path, orderBy) {
   const [docs, setDocs] = useState([]);
   useEffect(() => {
     let collection = db.collection(path);
-    orderBy && collection.orderBy(orderBy);
+    if (orderBy) {
+      collection = collection.orderBy(orderBy);
+    }
     return collection.onSnapshot(data => {
       const docs = [];
       data.forEach(doc => {
