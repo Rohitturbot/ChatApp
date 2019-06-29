@@ -1,25 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { db } from "./firebase";
+import React from "react";
+import useCollection from "./utils/useCollection";
 
 export default function Messages() {
-  const [messages, setMessages] = useState([]);
-  useEffect(() => {
-    return db
-      .collection("channel/general/messages")
-      .orderBy("createAt")
-      .onSnapshot(data => {
-        const docs = [];
-        data.forEach(doc => {
-          docs.push({
-            ...doc.data(),
-            id: doc.id
-          });
-        });
-        console.log("docs", docs);
-
-        setMessages(docs);
-      });
-  }, []);
+  const messages = useCollection("channel/general/messages", "createAt");
   return (
     <div className="Messages">
       <div className="EndOfMessages">That's every message!</div>
@@ -29,7 +12,7 @@ export default function Messages() {
           <div>
             <div className="Day">
               <div className="DayLine" />
-              <div className="DayText">12/6/2018</div>
+              <div className="DayText">29/06/2019</div>
               <div className="DayLine" />
             </div>
             <div className="Message with-avatar">
