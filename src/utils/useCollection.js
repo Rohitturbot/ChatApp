@@ -18,6 +18,6 @@ export default function useCollection(path, orderBy) {
       });
       setDocs(docs);
     });
-  }, []);
+  }, [path, orderBy]);
   return docs;
 }

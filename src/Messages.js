@@ -13,7 +13,11 @@ export default function Messages({ channelId }) {
         const showDay = false;
         const showAvatar = !previous || message.user.id !== previous.user.id;
         return showAvatar ? (
-          <MessageWithAvatar showDay={showDay} message={message} />
+          <MessageWithAvatar
+            showDay={showDay}
+            message={message}
+            key={message.id}
+          />
         ) : (
           <div key={message.id}>
             <div className="Message no-avatar">

@@ -3,7 +3,7 @@ import Nav from "./Nav";
 import Channel from "./Channel";
 import { db, firebase } from "./firebase";
 import LoginButton from "./LoginButton";
-import { Router, Redirect, redirectTo } from "@reach/router";
+import { Router, Redirect } from "@reach/router";
 
 function useAuth() {
   const [user, setUser] = useState(null);
