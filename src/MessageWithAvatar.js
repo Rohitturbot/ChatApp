@@ -1,5 +1,6 @@
 import React from "react";
 import useDocWithCache from "../src/utils/useDocWithCache";
+const moment = require("moment");
 
 export default function MessageWithAvatar({ message, showDay }) {
   const author = useDocWithCache(message.user.path);
@@ -23,7 +24,9 @@ export default function MessageWithAvatar({ message, showDay }) {
         <div className="Author">
           <div>
             <span className="UserName"> {author && author.displayName}</span>{" "}
-            <span className="TimeStamp">3:37 PM</span>
+            <span className="TimeStamp">
+              {moment(message.createAt.seconds * 1000).format("h:mm A")}
+            </span>
           </div>
           <div className="MessageContent">{message.text}</div>
         </div>
