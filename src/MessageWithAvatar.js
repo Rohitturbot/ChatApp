@@ -10,7 +10,9 @@ export default function MessageWithAvatar({ message, showDay }) {
       {showDay && (
         <div className="Day">
           <div className="DayLine" />
-          <div className="DayText">29/06/2019</div>
+          <div className="DayText">
+            {new Date(message.createAt.seconds * 1000).toLocaleDateString()}
+          </div>
           <div className="DayLine" />
         </div>
       )}
