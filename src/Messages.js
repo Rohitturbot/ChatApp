@@ -6,13 +6,6 @@ const moment = require("moment");
 export default function Messages({ channelId }) {
   const messages = useCollection(`channel/${channelId}/messages`, "createAt");
 
-  function useChatScroll(ref) {
-    useEffect(() => {
-      const node = ref.current;
-      node.scrollTop = node.scrollHeight;
-    });
-  }
-
   function showShowAvatar(previous, message) {
     const firstMessage = !previous;
     if (firstMessage) {
@@ -40,11 +33,28 @@ export default function Messages({ channelId }) {
     return sameDay;
   }
 
-  const scrollRef = useRef();
-  useChatScroll(scrollRef);
+  function ChatScroller(props) {
+    const ref = useRef();
+    const shouldScrollRef = useRef(true);
+    useEffect(() => {
+      if (shouldScrollRef.current) {
+        const node = ref.current;
+        node.scrollTop = node.scrollHeight;
+      }
+    });
+    const handelScroll = () => {
+      const node = ref.current;
+      const { scrollTop, clientHeight, scrollHeight } = node;
+      const atBottom = scrollHeight === clientHeight + scrollTop;
+      console.log("at botton", atBottom);
+
+      shouldScrollRef.current = atBottom;
+    };
+    return <div {...props} ref={ref} onScroll={handelScroll} />;
+  }
 
   return (
-    <div className="Messages" ref={scrollRef}>
+    <ChatScroller className="Messages">
       <div className="EndOfMessages">That's every message!</div>
 
       {messages.map((message, index) => {
@@ -65,6 +75,6 @@ export default function Messages({ channelId }) {
           </div>
         );
       })}
-    </div>
+    </ChatScroller>
   );
 }
