@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Nav from "./Nav";
 import Channel from "./Channel";
-import { db, firebase } from "./firebase";
+import { db, firebase, setupPresence } from "./firebase";
 import LoginButton from "./LoginButton";
 import { Router, Redirect } from "@reach/router";
 
@@ -16,6 +16,7 @@ function useAuth() {
           uid: fuser.uid
         };
         setUser(user);
+        setupPresence(user);
         db.collection("user")
           .doc(user.uid)
           .set(user, { merge: true });
