@@ -1,4 +1,4 @@
-# WeekEnd Chat APP
+# Chat APP
 
 This is a fun chatting app which is developed in a weekend.
 
@@ -7,13 +7,13 @@ This is a fun chatting app which is developed in a weekend.
 Clone repository
 
 ```
-git clone https://rohit_yadav@bitbucket.org/rohit_yadav/weekendchatapp.git
+git clone https://github.com/Rohitturbot/ChatApp.git
 ```
 
 go to
 
 ```
-cd ./weekendchatapp
+cd ./ChatApp
 ```
 
 install dependencies
